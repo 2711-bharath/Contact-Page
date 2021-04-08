@@ -35,8 +35,8 @@ var AddpageComponent = /** @class */ (function () {
     AddpageComponent.prototype.ngOnInit = function () {
         this.details = this.service.getData();
     };
-    AddpageComponent.prototype.goHome = function () {
-        this.router.navigateByUrl('/home');
+    AddpageComponent.prototype.goHome = function (id) {
+        this.router.navigate(['/home', id]);
     };
     AddpageComponent.prototype.onSubmit = function (frm) {
         if (this.details.length != 0) {
@@ -58,7 +58,7 @@ var AddpageComponent = /** @class */ (function () {
         console.log(this.temp);
         this.service.pushData(this.temp);
         this.detailForm.reset();
-        this.router.navigateByUrl('/home');
+        this.router.navigate(['/home', this.temp.id]);
     };
     AddpageComponent = __decorate([
         core_1.Component({

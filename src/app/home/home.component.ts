@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactService} from '../contact.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
+import {ActivatedRoute} from '@angular/router'
 
 export class person {
   id:string | any;
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   details:person[]|any;
 
 
-  constructor(private service:ContactService,private formBuild:FormBuilder) {
+  constructor(private service:ContactService,private formBuild:FormBuilder, private route:ActivatedRoute) {
     this.detailForm = this.formBuild.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -36,12 +37,25 @@ export class HomeComponent implements OnInit {
       address: ['']
     });
    }
-
+  id:string|any;
+  sub:any;
   ngOnInit(): void {
+  //   this.sub=this.Activatedroute.paramMap.subscribe(params => { 
+  //     console.log(params);
+  //      this.id = params.get('id');  
+  //  });
+  this.id = this.route.snapshot.paramMap.get("id");
+  console.log(this.id);
     this.details = this.service.getData();
     if(this.details.length!=0){
       this.currentPerson = this.details[0];
-      this.activeId = this.currentPerson.id;
+      if(this.id != null){
+        var index = this.details.map((value:person) => { return value.id }).indexOf(this.id);
+        this.currentPerson = this.details[index];  
+        this.activeId = this.id;
+      }else{
+        this.activeId = this.currentPerson.id;
+      }
     }
   }
 

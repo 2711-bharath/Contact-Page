@@ -41,8 +41,8 @@ export class AddpageComponent implements OnInit {
     this.details = this.service.getData();
   }
 
-  goHome(){
-    this.router.navigateByUrl('/home');
+  goHome(id:string){
+    this.router.navigate(['/home',id]);
   }
   temp:any;
   onSubmit(frm:any){
@@ -65,7 +65,7 @@ export class AddpageComponent implements OnInit {
     console.log(this.temp);
     this.service.pushData(this.temp);
     this.detailForm.reset();
-    this.router.navigateByUrl('/home');
+    this.router.navigate(['/home',this.temp.id]);
   }
 
 }

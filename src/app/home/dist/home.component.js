@@ -16,9 +16,10 @@ var person = /** @class */ (function () {
 }());
 exports.person = person;
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(service, formBuild) {
+    function HomeComponent(service, formBuild, route) {
         this.service = service;
         this.formBuild = formBuild;
+        this.route = route;
         this.detailForm = new forms_1.FormGroup({});
         this.activeId = "1";
         this.editForm = false;
@@ -32,10 +33,23 @@ var HomeComponent = /** @class */ (function () {
         });
     }
     HomeComponent.prototype.ngOnInit = function () {
+        //   this.sub=this.Activatedroute.paramMap.subscribe(params => { 
+        //     console.log(params);
+        //      this.id = params.get('id');  
+        //  });
+        this.id = this.route.snapshot.paramMap.get("id");
+        console.log(this.id);
         this.details = this.service.getData();
         if (this.details.length != 0) {
             this.currentPerson = this.details[0];
-            this.activeId = this.currentPerson.id;
+            if (this.id != null) {
+                var index = this.details.map(function (value) { return value.id; }).indexOf(this.id);
+                this.currentPerson = this.details[index];
+                this.activeId = this.id;
+            }
+            else {
+                this.activeId = this.currentPerson.id;
+            }
         }
     };
     HomeComponent.prototype.display = function (id) {
