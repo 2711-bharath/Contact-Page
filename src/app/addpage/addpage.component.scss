@@ -1,0 +1,108 @@
+h6 {
+    font-weight: 700;
+    font-size: 13px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.col-3 {
+    width: 270px;
+}
+
+.person-list {
+    padding: 0;
+    margin-left: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.list:hover {
+    background-color: #CFE7F3;
+    cursor: pointer;
+}
+
+ul {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.8);
+    list-style-type: none;
+    .list {
+        padding: 0;
+        li {
+            padding: 5px 0px 5px 10px;
+            line-height: 1.0;
+        }
+    }
+    .name {
+        font-size: 15px;
+        color: rgb(0, 0, 0);
+    }
+    hr {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.active {
+    background-color: #CFE7F3;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.personinfo {
+    h5 {
+        margin: 0;
+        padding-bottom: 3px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        li {
+            padding-top: 5px;
+        }
+    }
+}
+
+.col-6 {
+    .options {
+        margin-right: 5px;
+        margin-left: 3px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    img {
+        cursor: pointer;
+    }
+}
+
+.col-5 {
+    box-shadow: rgb(0 0 0 / 50%) 0px 5px 15px;
+    margin-left: 10px;
+}
+
+.addDetails {
+    .details {
+        width: 418px;
+    }
+    label {
+        font-size: 13px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .required {
+        font-size: 15px;
+        color: #E42E45;
+        font-weight: 400;
+    }
+    .flex-container {
+        display: flex;
+    }
+}
+
+.btnAdd {
+    width: 86px;
+    height: 30px;
+    float: right;
+    font-size: small;
+    margin-top: 10px;
+    background-color: #27A844;
+    border: 1px solid white;
+    border-radius: 4px;
+}

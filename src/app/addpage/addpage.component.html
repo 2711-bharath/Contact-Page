@@ -1,0 +1,47 @@
+<h6>CONTACTS</h6>
+<div class="row">
+    <div class="col-3">
+        <ul class="person-list" *ngIf="details.length!=0">
+            <li *ngFor="let person of details">
+                <ul class="list border pt-1 pb-1" (click)="goHome()">
+                    <li class="name">{{person.name}}</li>
+                    <li>{{person.mobile}}</li>
+                    <li>{{person.email}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-5 ms-5 p-3">
+        <div class="addDetails ms-1">
+            <form [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
+                <div class="details">
+                    <label for="name" class="form-label">Name <span class="required">*</span></label>
+
+                    <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{ 'is-invalid': detailForm.controls.name.errors && detailForm.controls.name.touched}">
+                    <label for="email" class="form-label">Email <span class="required">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': detailForm.controls.email.errors && detailForm.controls.email.touched}">
+                    <div class="flex-container">
+                        <div>
+                            <label for="mobile" class="form-label">Mobile <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': detailForm.controls.mobile.errors && detailForm.controls.mobile.touched}">
+                        </div>
+                        <div style="margin-left: 6px;">
+                            <label for="landline" class="form-label">Landline</label>
+                            <input type="text" class="form-control" id="landline" name="landline" formControlName="landline">
+                        </div>
+                    </div>
+                    <label for="website" class="form-label">Website</label>
+                    <input type="text" class="form-control" id="website" name="website" formControlName="website">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="2" formControlName="address"></textarea>
+                </div>
+                <div style="float: right;">
+                    <a href="/home">
+                        <input type="submit" class="btnAdd" value="Add" [disabled]="!detailForm.valid">
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

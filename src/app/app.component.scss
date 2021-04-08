@@ -1,0 +1,46 @@
+$nav-link-padding-x: .5rem;
+$smallText: 13px;
+$navbgcolor: #333;
+$navlinkbgcolor: #FF9900;
+$navlinkcolor: white;
+.brand {
+    height: 100px;
+    padding: 25px 15px;
+    font-size: 40px;
+    font-weight: 200;
+    color: white;
+    background-color: #3398CC;
+    vertical-align: baseline;
+    margin-bottom: 0px;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: $smallText;
+    background-color: $navbgcolor;
+    height: 33px;
+    .nav-link {
+        flex-direction: row;
+        font-weight: bold;
+        text-decoration: none;
+        margin: 0px;
+    }
+    .nav-link a {
+        color: white;
+        text-decoration: none;
+        margin-left: 5px;
+        padding: 8px 13px;
+        margin-bottom: 0px;
+    }
+    .active {
+        font-weight: bold;
+        background-color: $navlinkbgcolor;
+        border-left: 3px solid $navlinkcolor;
+    }
+    .blog {
+        margin-left: auto;
+        margin-right: 15px;
+        margin-top: 5px;
+    }
+}

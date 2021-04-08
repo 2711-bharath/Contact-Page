@@ -1,0 +1,41 @@
+.brand {
+  height: 100px;
+  padding: 25px 15px;
+  font-size: 40px;
+  font-weight: 200;
+  color: white;
+  background-color: #3398CC;
+  vertical-align: baseline;
+  margin-bottom: 0px;
+}
+
+.navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 13px;
+  background-color: #333;
+  height: 33px;
+}
+.navbar-nav .nav-link {
+  flex-direction: row;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0px;
+}
+.navbar-nav .nav-link a {
+  color: white;
+  text-decoration: none;
+  margin-left: 5px;
+  padding: 8px 13px;
+  margin-bottom: 0px;
+}
+.navbar-nav .active {
+  font-weight: bold;
+  background-color: #FF9900;
+  border-left: 3px solid white;
+}
+.navbar-nav .blog {
+  margin-left: auto;
+  margin-right: 15px;
+  margin-top: 5px;
+}

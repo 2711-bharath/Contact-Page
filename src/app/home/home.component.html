@@ -1,0 +1,61 @@
+<h6 *ngIf="details.length!=0">CONTACTS</h6>
+<div class="row" *ngIf="details.length!=0">
+    <div class="col-3">
+        <ul class="person-list ">
+            <li *ngFor="let person of details">
+                <ul class="list border pt-1 pb-1" (click)="display(person.id)" [ngClass]="{'active':person.id==activeId}">
+                    <li class="name">{{person.name}}</li>
+                    <li>{{person.mobile}}</li>
+                    <li>{{person.email}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-5 ms-5 p-3" *ngIf="editForm==true">
+        <div class="addDetails ms-1">
+            <form [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
+                <div class="details">
+                    <label for="name" class="form-label">Name <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{ 'is-invalid': detailForm.controls.name.errors && detailForm.controls.name.touched}">
+                    <label for="email" class="form-label">Email <span class="required">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': detailForm.controls.email.errors && detailForm.controls.email.touched}">
+                    <div class="flex-container">
+                        <div>
+                            <label for="mobile" class="form-label">Mobile <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': detailForm.controls.mobile.errors && detailForm.controls.mobile.touched}">
+                        </div>
+                        <div style="margin-left: 6px;">
+                            <label for="landline" class="form-label">Landline</label>
+                            <input type="text" class="form-control" id="landline" name="landline" formControlName="landline">
+                        </div>
+                    </div>
+                    <label for="website" class="form-label">Website</label>
+                    <input type="text" class="form-control" id="website" name="website" formControlName="website">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="2" formControlName="address"></textarea>
+                </div>
+                <div style="float: right;">
+                    <input type="submit" class="btnAdd" value="Add" [disabled]="!detailForm.valid">
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="personinfo col-3 ms-5" *ngIf="currentPerson!='' && editForm == false ">
+        <h5>{{currentPerson.name}}</h5>
+        <ul>
+            <li>Email: {{currentPerson.email}}</li>
+            <li>Mobile: {{currentPerson.mobile}}</li>
+            <li>Landline: {{currentPerson.landline}}</li>
+            <li>Website: {{currentPerson.website}}</li>
+            <li>Address: {{currentPerson.address}}</li>
+        </ul>
+    </div>
+    <div class="col-6 ms-5" *ngIf=" editForm == false">
+        <img src="../../assets/images/Edit-icon.png" alt="edit icon" width="14px" height="14px" (click)="edit()"><span class="options" (click)="edit()">EDIT</span>
+        <img src="../../assets/images/delete2.png" alt="delete icon" width="15px" height="23px" (click)="delete()"><span class="options" (click)="delete()">DELETE</span>
+    </div>
+</div>
+<div class="text-center mt-5" *ngIf="details.length==0">
+    <span class="display-6 text-danger"><i class="fas fa-info-circle me-3"></i>No Contacts To Display</span>
+</div>
