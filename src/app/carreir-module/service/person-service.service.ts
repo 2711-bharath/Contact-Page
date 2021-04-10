@@ -37,4 +37,14 @@ export class PersonServiceService {
     var index = this.contactDetails.map((value:Person) => { return value.id }).indexOf(data.id);
     this.contactDetails[index] = data;
   }
+
+  checkId(id:string){
+    var index = this.contactDetails.map((value:Person) => { return value.id }).indexOf(id);
+    if(index == -1){
+      return false;
+    }else{
+      return true;
+    }
+
+  }
 }

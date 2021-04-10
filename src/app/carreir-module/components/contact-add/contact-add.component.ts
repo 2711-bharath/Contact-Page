@@ -14,20 +14,25 @@ export class ContactAddComponent implements OnInit {
   detailForm = new FormGroup({})
 
   constructor(private service:PersonServiceService,private formBuild:FormBuilder, private route:ActivatedRoute, private router:Router) { 
+    
+  }
+
+  submitted:boolean = false
+  contactDetails:Person[];
+  id:string;
+
+  createForm(){
     this.detailForm = this.formBuild.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required]],
+      mobile: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10)]],
       landline : [''],
       website : [''],
       address: ['']
     });
   }
-  submitted:boolean = false
-  contactDetails:Person[];
-  id:string;
-
   ngOnInit(): void {
+    this.createForm();
     this.contactDetails = this.service.getContactDetails();
     this.id = this.route.snapshot.paramMap.get("id");
     this.router.events.subscribe((val) =>{
@@ -37,7 +42,11 @@ export class ContactAddComponent implements OnInit {
     })
     
     if(this.id!=null){
-      this.fillForm(this.id)
+      if(this.service.checkId(this.id)){
+        this.fillForm(this.id)
+      }else{
+        this.router.navigateByUrl('/add');
+      }
     }
   }
 

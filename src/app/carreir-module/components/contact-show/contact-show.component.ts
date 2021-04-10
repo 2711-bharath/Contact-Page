@@ -13,12 +13,17 @@ export class ContactShowComponent implements OnInit {
 
   constructor(private service:PersonServiceService,private formBuild:FormBuilder, private route:ActivatedRoute, private router:Router) {}
 
-  displayForm:string="false";
+  displayForm:boolean=false;
   personDetails:Person;
   
   delete(id:string){
     this.service.deletePersonDetails(id);
-    this.router.navigateByUrl('/home')
+    let details:Person[] = this.service.getContactDetails();
+    if(details.length==0){
+      this.router.navigateByUrl('/home')
+    }else{
+      this.router.navigate(['/home',details[0].id]);
+    }
   }
 
 
@@ -26,19 +31,31 @@ export class ContactShowComponent implements OnInit {
     this.router.navigate(['/add',this.personDetails.id]);
   }
 
-
+  wrongId:string = "false";
   ngOnInit(): void {
     var id:string;
     id = this.route.snapshot.paramMap.get("id");
     console.log(id,typeof(id));
+    console.log(this.service.checkId(id))
     if(id!=null){
-      this.personDetails = this.service.getPersonDetials(id);
+      if(this.service.checkId(id)){
+        this.personDetails = this.service.getPersonDetials(id);
+        this.wrongId = "false";
+      }else{
+        this.wrongId = "true";
+      }
     }
     this.router.events.subscribe((val) =>{
       if(val instanceof NavigationEnd){
         id = this.route.snapshot.paramMap.get("id");
         console.log(id)
-        this.personDetails = this.service.getPersonDetials(id);            
+        if(this.service.checkId(id)){
+          this.personDetails = this.service.getPersonDetials(id);   
+          this.wrongId = "false";
+        }         
+        else{
+          this.wrongId = "true";
+        }
       } 
     })
   }

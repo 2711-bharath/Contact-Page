@@ -32,6 +32,7 @@
                             <input type="text" class="form-control" id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': detailForm.controls.mobile.errors && submitted}">
                             <div *ngIf="submitted && detailForm.controls.mobile.errors" class="invalid-feedback">
                                 <div *ngIf="detailForm.controls.mobile.errors.required">* Mobile is required</div>
+                                <div *ngIf="detailForm.controls.mobile.errors.minLength">* Mobile should min 10 digits</div>
                             </div>
                         </div>
                         <div style="margin-left: 6px;margin-top: 3px;">
