@@ -6,15 +6,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.AddpageComponent = exports.person = void 0;
+exports.AddpageComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var person = /** @class */ (function () {
-    function person() {
-    }
-    return person;
-}());
-exports.person = person;
 var AddpageComponent = /** @class */ (function () {
     function AddpageComponent(service, formBuild, router) {
         this.service = service;

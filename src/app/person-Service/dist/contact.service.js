@@ -6,14 +6,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.ContactService = exports.person = void 0;
+exports.ContactService = void 0;
 var core_1 = require("@angular/core");
-var person = /** @class */ (function () {
-    function person() {
-    }
-    return person;
-}());
-exports.person = person;
 var ContactService = /** @class */ (function () {
     function ContactService() {
         this.contactDetails = [

@@ -1,17 +1,15 @@
 <h6>CONTACTS</h6>
 <div class="row">
-    <div class="col-3">
-        <ul class="person-list" *ngIf="details.length!=0">
-            <li *ngFor="let person of details">
-                <ul class="list border pt-1 pb-1" (click)="goHome(person.id)">
-                    <li class="name">{{person.name}}</li>
-                    <li>{{person.mobile}}</li>
-                    <li>{{person.email}}</li>
-                </ul>
-            </li>
-        </ul>
+    <div class="col-3 ms-3">
+        <div class="list-group rounded-0" *ngFor="let person of details">
+            <a class="list-group-item list-group-item-action " [routerLink]="['/home',person.id]">
+                <li class="name">{{person.name}}</li>
+                <li>{{person.mobile}}</li>
+                <li>{{person.email}}</li>
+            </a>
+        </div>
     </div>
-    <div class="col-5 ms-5 p-3">
+    <div class="col-5 ms-4 p-3">
         <div class="addDetails ms-1">
             <form [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
                 <div class="details">

@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactService} from '../contact.service';
+import {ContactService} from '../person-Service/contact.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
+import { Person } from '../person-Class/person';  
 
-export class person {
-  id:string | any;
-  name: string | any;
-  email: string | any;
-  phoneno: string | any;
-  landline: string | any;
-  website: string | any;
-  address: string | any;
-}
 
 @Component({
   selector: 'app-addpage',
@@ -22,7 +14,7 @@ export class person {
 export class AddpageComponent implements OnInit {
   
   detailForm = new FormGroup({})
-  details:person[]|any;
+  details:Person[]|any;
   count:number=0;
   submitted:boolean = false;
 

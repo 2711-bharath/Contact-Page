@@ -1,17 +1,17 @@
-<h6 *ngIf="details.length!=0">CONTACTS</h6>
-<div class="row" *ngIf="details.length!=0">
-    <div class="col-3">
-        <ul class="person-list ">
-            <li *ngFor="let person of details">
-                <ul class="list border pt-1 pb-1" (click)="display(person.id)" [ngClass]="{'active':person.id==activeId}">
+<h6 *ngIf="details.length!=0 && currentPerson!=''">CONTACTS</h6>
+<div class="row" *ngIf="details.length!=0 && currentPerson!=''">
+    <div class="col-3 ms-3">
+        <div class="col-3">
+            <div class="list-group rounded-0" *ngFor="let person of details">
+                <a class="list-group-item list-group-item-action " [routerLink]="['/home',person.id]" routerLinkActive="activePerson text-dark" (click)="display(person.id)">
                     <li class="name">{{person.name}}</li>
                     <li>{{person.mobile}}</li>
                     <li>{{person.email}}</li>
-                </ul>
-            </li>
-        </ul>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="col-5 ms-5 p-3" *ngIf="editForm==true">
+    <div class="col-5 ms-4 p-3" *ngIf="editForm==true">
         <div class="addDetails ms-1">
             <form [formGroup]="detailForm" (ngSubmit)="onSubmit(detailForm.value)">
                 <div class="details">
@@ -41,7 +41,7 @@
         </div>
 
     </div>
-    <div class="personinfo col-3 ms-5" *ngIf="currentPerson!='' && editForm == false ">
+    <div class="personinfo col-3 ms-4" *ngIf="currentPerson!='' && editForm == false ">
         <h5>{{currentPerson.name}}</h5>
         <ul>
             <li>Email: {{currentPerson.email}}</li>
@@ -52,10 +52,10 @@
         </ul>
     </div>
     <div class="col-6 ms-5" *ngIf=" editForm == false">
-        <img src="../../assets/images/Edit-icon.png" alt="edit icon" width="14px" height="14px" (click)="edit()"><span class="options" (click)="edit()">EDIT</span>
-        <img src="../../assets/images/delete2.png" alt="delete icon" width="15px" height="23px" (click)="delete()"><span class="options" (click)="delete()">DELETE</span>
+        <img src="../../assets/images/Edit-icon.png " alt="edit icon " width="14px " height="14px " (click)="edit() "><span class="options " (click)="edit() ">EDIT</span>
+        <img src="../../assets/images/delete2.png " alt="delete icon " width="15px " height="23px " (click)="delete() "><span class="options " (click)="delete() ">DELETE</span>
     </div>
 </div>
-<div class="text-center mt-5" *ngIf="details.length==0">
-    <span class="display-6 text-danger"><i class="fas fa-info-circle me-3"></i>No Contacts To Display</span>
+<div class="text-center mt-5 " *ngIf="details.length==0 || currentPerson==''">
+    <span class="display-6 text-danger "><i class="fas fa-info-circle me-3 "></i>No Contacts To Display</span>
 </div>

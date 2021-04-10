@@ -13,7 +13,6 @@ var forms_1 = require("@angular/forms");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
-var addpage_component_1 = require("./addpage/addpage.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -22,7 +21,6 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 app_component_1.AppComponent,
                 home_component_1.HomeComponent,
-                addpage_component_1.AddpageComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,

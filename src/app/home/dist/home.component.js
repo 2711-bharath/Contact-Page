@@ -6,22 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.HomeComponent = exports.person = void 0;
+exports.HomeComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var person = /** @class */ (function () {
-    function person() {
-    }
-    return person;
-}());
-exports.person = person;
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(service, formBuild, route) {
+    function HomeComponent(service, formBuild, route, router) {
         this.service = service;
         this.formBuild = formBuild;
         this.route = route;
+        this.router = router;
         this.detailForm = new forms_1.FormGroup({});
-        this.activeId = "1";
+        this.activeId = "";
         this.editForm = false;
         this.detailForm = this.formBuild.group({
             name: ['', [forms_1.Validators.required]],
@@ -33,27 +28,28 @@ var HomeComponent = /** @class */ (function () {
         });
     }
     HomeComponent.prototype.ngOnInit = function () {
-        //   this.sub=this.Activatedroute.paramMap.subscribe(params => { 
-        //     console.log(params);
-        //      this.id = params.get('id');  
-        //  });
         this.id = this.route.snapshot.paramMap.get("id");
-        console.log(this.id);
         this.details = this.service.getData();
+        console.log(this.id);
         if (this.details.length != 0) {
             this.currentPerson = this.details[0];
             if (this.id != null) {
                 var index = this.details.map(function (value) { return value.id; }).indexOf(this.id);
+                console.log(index);
+                if (index == -1) {
+                    this.currentPerson = "";
+                    return;
+                }
                 this.currentPerson = this.details[index];
                 this.activeId = this.id;
             }
             else {
                 this.activeId = this.currentPerson.id;
+                this.router.navigate(['/home', this.activeId]);
             }
         }
     };
     HomeComponent.prototype.display = function (id) {
-        console.log(id);
         var index = this.details.map(function (value) { return value.id; }).indexOf(id);
         this.currentPerson = this.details[index];
         console.log(this.currentPerson);
@@ -69,10 +65,7 @@ var HomeComponent = /** @class */ (function () {
         this.detailForm.setValue({ name: this.currentPerson.name, email: this.currentPerson.email, mobile: this.currentPerson.mobile, landline: this.currentPerson.landline, website: this.currentPerson.website, address: this.currentPerson.address });
     };
     HomeComponent.prototype["delete"] = function () {
-        if (this.details.length == 0) {
-            return;
-        }
-        else if (this.details.length == 1) {
+        if (this.details.length == 1) {
             this.details = this.service.deleteData(this.activeId);
             this.currentPerson = '';
             return;
@@ -80,6 +73,7 @@ var HomeComponent = /** @class */ (function () {
         this.details = this.service.deleteData(this.activeId);
         this.activeId = this.details[0].id;
         this.display(this.activeId);
+        this.router.navigate(['/home', this.activeId]);
     };
     HomeComponent.prototype.onSubmit = function (frm) {
         this.editForm = false;
