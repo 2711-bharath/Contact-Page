@@ -51,7 +51,7 @@ export class ContactAddComponent implements OnInit {
 
   onSubmit(frm:any){
 
-    if(frm.valid){
+    if(this.detailForm.invalid){
       this.submitted = true;
       return;
     }else{
