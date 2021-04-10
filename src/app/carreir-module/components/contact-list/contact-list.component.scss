@@ -1,0 +1,27 @@
+@mixin bgactivate {
+    background-color: #CFE7F3;
+    cursor: pointer;
+}
+
+.col-3 {
+    width: 260px;
+}
+
+li {
+    font-size: 14px;
+    list-style-type: none;
+}
+
+.name {
+    font-size: 16px;
+}
+
+a {
+    &:hover {
+        @include bgactivate;
+    }
+}
+
+.activePerson {
+    @include bgactivate;
+}
