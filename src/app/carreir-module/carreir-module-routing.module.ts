@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'home', component: ContactListComponent,
     children: [{ path: ':id', component: ContactShowComponent }]
   },
-  {path:'home',component:ContactListComponent},
+  // {path:'home',component:ContactListComponent},
   {path:'add',component:ContactAddComponent},
   {path:'add/:id',component:ContactAddComponent},
 
