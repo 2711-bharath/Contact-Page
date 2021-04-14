@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
     ContactListComponent,
     ContactAddComponent,
     ContactShowComponent,
-    
   ],
 
   imports: [

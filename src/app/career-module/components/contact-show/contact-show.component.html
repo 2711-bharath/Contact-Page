@@ -25,7 +25,7 @@
         <img src="../../../../assets/images/delete2.png " alt="delete icon " width="15px " height="23px " (click)="delete(personDetails.id) "><span class="options " (click)="delete(personDetails.id) ">DELETE</span>
     </div>
 
-    <div *ngIf="!personDetailsStatus" class="col-5 ms-3">
+    <div *ngIf="!status" class="col-5 ms-3">
         <span class="display-6 text-danger "><i class="fas fa-info-circle me-3 "></i>Wrong User Id</span>
     </div>
 </div>

@@ -14,14 +14,14 @@ export class ContactShowComponent implements OnInit {
 
   displayForm:boolean=false;
   personDetails:Contact;
-  personDetailsStatus:boolean;
+  status:boolean;
 
   delete(id:string){
     
-    let x:any = this.service.deletePersonDetails(id);     
-    this.personDetails = x[0];
-    this.personDetailsStatus = x[1];
-    if(!this.personDetailsStatus){
+    let x:object = this.service.deletePersonDetails(id);     
+    this.personDetails = x['contact'];
+    this.status = x['status'];
+    if(this.personDetails == null){
       this.router.navigateByUrl('/home')
     }else{
       this.router.navigate(['/home',this.personDetails.id]);
@@ -52,9 +52,9 @@ export class ContactShowComponent implements OnInit {
   }
 
   updateContact(id:string){
-      let x:any =  this.service.getPersonDetials(id);
-      this.personDetails = x[0];
-      this.personDetailsStatus = x[1];
+      let x:object =  this.service.getPersonDetials(id);
+      this.personDetails = x['contact'];
+      this.status = x['status'];
       if(this.personDetails!=undefined){
         this.addressArray = this.personDetails.address.split(',');
         this.lastAddress = this.addressArray[this.addressArray.length-1];  

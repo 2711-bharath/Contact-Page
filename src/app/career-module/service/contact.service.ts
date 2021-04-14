@@ -12,20 +12,20 @@ export class ContactService {
     this.contactId = 0;
   }
 
-  getContactDetails(){
+  getContactDetails():object{
     if(this.contactDetails.length==0){
-      return [[],false]
+      return {contacts:[],status:false}
     }else{
-      return [this.contactDetails,true];
+      return {contacts:this.contactDetails,status:true};
     }
   }
 
-  getPersonDetials(id:string){
+  getPersonDetials(id:string):object{
     if(this.contactDetails.length==0){
-      return [null,false]
+      return {contact:null,status:false}
     }else{
       var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
-      return [this.contactDetails[index],true];
+      return {contact:this.contactDetails[index],status:true};
     }
     
   }
@@ -33,11 +33,10 @@ export class ContactService {
   deletePersonDetails(id:string){
     var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
     this.contactDetails.splice(index,1);
-    console.log(this.contactDetails)
     if(this.contactDetails.length==0){
-      return [null,false]
+      return {contact:null,status:false}
     }else{
-      return [this.contactDetails[0],true]
+      return {contact:this.contactDetails[0],staus:true}
     }
   }
 
@@ -53,17 +52,12 @@ export class ContactService {
     this.contactDetails[index] = contact;
   }
 
-  checkId(id:string){
+  checkId(id:string):boolean{
     var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
     if(index == -1){
       return false;
     }else{
       return true;
     }
-  }
-
-  getId(){
-    this.contactId++
-    return this.contactId;
   }
 }
