@@ -1,12 +1,23 @@
 <div class="row">
-    <div class="col-4 ms-5" *ngIf="wrongId=='false'">
+    <div class="col-4 ms-5">
         <h5>{{personDetails.name}}</h5>
         <ul class="list-group">
             <li>Email: {{personDetails.email}}</li>
             <li>Mobile: {{personDetails.mobile}}</li>
             <li>Landline: {{personDetails.landline}}</li>
             <li>Website: {{personDetails.website}}</li>
-            <li>Address: {{personDetails.address}}</li>
+            <!-- <li>Address: {{personDetails.address}}</li> -->
+            <li>
+                <div class="row">
+                    <div class="col-2">Address: </div>
+                    <div class="col-4">
+                        <ul *ngFor="let address of addressArray" class="ms-1 p-0">
+                            <li *ngIf="lastAddress!=address">{{address}},</li>
+                            <li *ngIf="lastAddress==address">{{address}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="col-4 ms-2" *ngIf="wrongId=='false'">
@@ -14,7 +25,7 @@
         <img src="../../../../assets/images/delete2.png " alt="delete icon " width="15px " height="23px " (click)="delete(personDetails.id) "><span class="options " (click)="delete(personDetails.id) ">DELETE</span>
     </div>
 
-    <div *ngIf="wrongId=='true'" class="col-5 ms-3">
+    <div *ngIf="!personDetailsStatus" class="col-5 ms-3">
         <span class="display-6 text-danger "><i class="fas fa-info-circle me-3 "></i>Wrong User Id</span>
     </div>
 </div>

@@ -2,7 +2,7 @@
 <div class="row" *ngIf="contactDetails.length!=0">
     <div class="col-3">
         <div class="list-group rounded-0" *ngFor="let person of contactDetails">
-            <a class="list-group-item list-group-item-action " [routerLink]="['/home',person.id]" routerLinkActive="activePerson text-dark">
+            <a class="list-group-item list-group-item-action" [routerLink]="['/home',person.id]" routerLinkActive="activePerson text-dark">
                 <li class="name">{{person.name}}</li>
                 <li>{{person.mobile}}</li>
                 <li>{{person.email}}</li>

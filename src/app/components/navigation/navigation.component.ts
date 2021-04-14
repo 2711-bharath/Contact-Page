@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
-import { Person } from 'src/app/carreir-module/model/person.model';
-import { PersonServiceService } from '../../carreir-module/service/person-service.service';
+import { Contact } from 'src/app/career-module/model/contacts.model';
+import { ContactService } from '../../career-module/service/contact.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,11 +10,9 @@ import { PersonServiceService } from '../../carreir-module/service/person-servic
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private router:Router,private service:PersonServiceService) { }
+  constructor(private router:Router,private service:ContactService) { }
 
   ngOnInit(): void {
-    let contactDetails:Person[] = this.service.getContactDetails();
-    this.router.navigate(['/home',contactDetails[0].id])
 
   }
 
