@@ -13,19 +13,20 @@ export class ContactListComponent implements OnInit {
 
   constructor(private service:ContactService,private router:Router, private route:ActivatedRoute) { }
   
-  contactDetails:Contact[];
+  contactDetails:Contact[]=[];
   status:boolean;
 
   ngOnInit(): void {
-    let x:object = this.service.getContactDetails();
-    this.contactDetails = x['contacts'];
-    this.status = x['status'];
-    if(this.contactDetails.length>0){
-      let href = this.router.url;
-      if(href=="/home"){
+    let datastatus:object = this.service.getContactDetails();
+    this.status = datastatus['status'];
+    if(this.status){
+      this.contactDetails = datastatus['contacts'];
+      let url = this.router.url;
+      if(url=="/home"){
         this.router.navigate(['/home',this.contactDetails[0].id]);
-      }else{
-        this.router.navigateByUrl(href);
+      }
+      else{
+        this.router.navigateByUrl(url);
       }
     }
   }

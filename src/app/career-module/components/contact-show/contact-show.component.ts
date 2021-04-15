@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { Contact } from '../../model/contacts.model';  
 import { ContactService } from '../../service/contact.service';
-// import { Contact, ContactService } from '../../../career-module' 
+// import { Contact, ContactService } from '../../../career-module'; 
 @Component({
   selector: 'app-contact-show',
   templateUrl: './contact-show.component.html',
@@ -18,9 +18,9 @@ export class ContactShowComponent implements OnInit {
 
   delete(id:string){
     
-    let x:object = this.service.deletePersonDetails(id);     
-    this.personDetails = x['contact'];
-    this.status = x['status'];
+    let datastatus:object = this.service.deletePersonDetails(id);     
+    this.personDetails = datastatus['contact'];
+    this.status = datastatus['status'];
     console.log(this.status)
     if(!this.status){
       this.router.navigateByUrl('/home')
@@ -36,26 +36,29 @@ export class ContactShowComponent implements OnInit {
   addressArray:string[];
   lastAddress:string;
   wrongId:string = "false";
-
+  contactDetails:Contact[]=[];
   ngOnInit(): void {
 
+    
     var id:string;
     id = this.route.snapshot.paramMap.get("id");
-    if(id!=null){
-      this.updateContact(id);
-    } 
     this.router.events.subscribe((val) =>{
       if(val instanceof NavigationEnd){
         id = this.route.snapshot.paramMap.get("id");
         this.updateContact(id);
       } 
     })
+    console.log(id)
+    if(id!=null){
+      this.updateContact(id);
+    }
+
   }
 
   updateContact(id:string){
-      let x:object =  this.service.getPersonDetials(id);
-      this.personDetails = x['contact'];
-      this.status = x['status'];
+      let datastatus:object =  this.service.getPersonDetials(id);
+      this.personDetails = datastatus['contact'];
+      this.status = datastatus['status'];
       if(this.personDetails!=undefined){
         this.addressArray = this.personDetails.address.split(',');
         this.lastAddress = this.addressArray[this.addressArray.length-1];  

@@ -14,7 +14,7 @@ export class ContactService {
 
   getContactDetails():object{
     if(this.contactDetails.length==0){
-      return {contacts:[],status:false}
+      return {contacts:null,status:false}
     }else{
       return {contacts:this.contactDetails,status:true};
     }

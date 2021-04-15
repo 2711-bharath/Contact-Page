@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../service/contact.service';
 import { Contact } from '../../model/contacts.model';
-// import { ContactService, Contact} from '../../../career-module';
-import { FormGroup, FormControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms'
+import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router'
 
 @Component({
@@ -17,7 +16,7 @@ export class ContactAddComponent implements OnInit {
   constructor(private service:ContactService,private formBuild:FormBuilder, private route:ActivatedRoute, private router:Router) { }
 
   submitted:boolean = false
-  contactDetails:Contact[];
+  contactDetails:Contact[]=[];
   contactDetailsStatus:Boolean;
   id:string;
 
@@ -35,10 +34,12 @@ export class ContactAddComponent implements OnInit {
   ngOnInit(): void {
 
     this.createForm();
-    let x:object = this.service.getContactDetails()
+    let datastatus:object = this.service.getContactDetails()
 
-    this.contactDetails = x['contacts'];
-    this.contactDetailsStatus = x['status']; 
+    this.contactDetailsStatus = datastatus['status']; 
+    if(this.contactDetailsStatus){
+      this.contactDetails = datastatus['contacts'];
+    }
     this.id = this.route.snapshot.paramMap.get("id");
     this.router.events.subscribe((val) =>{
       if(val instanceof NavigationEnd){

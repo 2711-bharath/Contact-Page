@@ -13,7 +13,6 @@ const routes: Routes = [
   },
   {path:'add',component:ContactAddComponent},
   {path:'home/edit/:id',component:ContactAddComponent},
-
 ];
 
 @NgModule({
