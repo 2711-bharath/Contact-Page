@@ -36,7 +36,7 @@ export class ContactService {
     if(this.contactDetails.length==0){
       return {contact:null,status:false}
     }else{
-      return {contact:this.contactDetails[0],staus:true}
+      return {contact:this.contactDetails[0],status:true}
     }
   }
 

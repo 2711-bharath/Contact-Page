@@ -21,7 +21,8 @@ export class ContactShowComponent implements OnInit {
     let x:object = this.service.deletePersonDetails(id);     
     this.personDetails = x['contact'];
     this.status = x['status'];
-    if(this.personDetails == null){
+    console.log(this.status)
+    if(!this.status){
       this.router.navigateByUrl('/home')
     }else{
       this.router.navigate(['/home',this.personDetails.id]);
