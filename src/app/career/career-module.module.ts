@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CarreirModuleRoutingModule, ContactListComponent, ContactShowComponent, ContactAddComponent } from '../career-module'
+import { CarreirModuleRoutingModule, ContactListComponent, ContactShowComponent, ContactAddComponent } from '.'
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common';  

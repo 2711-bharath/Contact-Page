@@ -18,21 +18,21 @@
                     <label for="name" class="form-label">Name <span class="required">*</span></label>
                     <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{ 'is-invalid': detailForm.controls.name.errors && submitted}">
                     <div *ngIf="submitted && detailForm.controls.name.errors" class="invalid-feedback">
-                        <div *ngIf="detailForm.controls.name.errors.required">Name is required</div>
+                        <div class="errormsg" *ngIf="detailForm.controls.name.errors.required">Name is required</div>
                     </div>
                     <label for="email" class="form-label">Email <span class="required">*</span></label>
                     <input type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': detailForm.controls.email.errors && submitted}">
                     <div *ngIf="submitted && detailForm.controls.email.errors" class="invalid-feedback">
-                        <div *ngIf="detailForm.controls.email.errors.required">Email is required</div>
-                        <div *ngIf="detailForm.controls.email.errors.email">Enter valid email</div>
+                        <div class="errormsg" *ngIf="detailForm.controls.email.errors.required">Email is required</div>
+                        <div class="errormsg" *ngIf="detailForm.controls.email.errors.email">Enter valid email</div>
                     </div>
                     <div class="flex-container">
                         <div>
                             <label for="mobile" class="form-label">Mobile <span class="required">*</span></label>
                             <input type="text" class="form-control" id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': detailForm.controls.mobile.errors && submitted}">
                             <div *ngIf="submitted && detailForm.controls.mobile.errors" class="invalid-feedback">
-                                <div *ngIf="detailForm.controls.mobile.errors.required">Mobile is required</div>
-                                <div *ngIf="detailForm.controls.mobile.errors">Mobile should be 10 digits</div>
+                                <div class="errormsg" *ngIf="detailForm.controls.mobile.errors.required">Mobile is required</div>
+                                <div class="errormsg" *ngIf="detailForm.controls.mobile.errors && !detailForm.controls.mobile.errors.required">Mobile should be 10 digits</div>
                             </div>
                         </div>
                         <div style="margin-left: 6px;margin-top: 3px;">

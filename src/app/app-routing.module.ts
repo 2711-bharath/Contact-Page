@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    
+  {  
     path: '',
-    loadChildren: () => import('./career-module/career-module.module').then(m => m.CarreirModuleModule)
+    loadChildren: () => import('./career/career-module.module').then(m => m.CarreirModuleModule)
    },
 
    

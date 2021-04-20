@@ -18,7 +18,7 @@ export class ContactShowComponent implements OnInit {
 
   delete(id:string){
     
-    let datastatus:object = this.service.deletePersonDetails(id);     
+    let datastatus:object = this.service.deleteContact(id);     
     this.personDetails = datastatus['contact'];
     this.status = datastatus['status'];
     console.log(this.status)
@@ -37,9 +37,9 @@ export class ContactShowComponent implements OnInit {
   lastAddress:string;
   wrongId:string = "false";
   contactDetails:Contact[]=[];
+
   ngOnInit(): void {
 
-    
     var id:string;
     id = this.route.snapshot.paramMap.get("id");
     this.router.events.subscribe((val) =>{
@@ -56,13 +56,10 @@ export class ContactShowComponent implements OnInit {
   }
 
   updateContact(id:string){
-      let datastatus:object =  this.service.getPersonDetials(id);
+      let datastatus:object =  this.service.getContact(id);
       this.personDetails = datastatus['contact'];
       this.status = datastatus['status'];
-      if(this.personDetails!=undefined){
-        this.addressArray = this.personDetails.address.split(',');
-        this.lastAddress = this.addressArray[this.addressArray.length-1];  
-      }
+      console.log(this.status)
   }
 }
 

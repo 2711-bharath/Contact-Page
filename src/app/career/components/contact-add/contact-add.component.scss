@@ -28,7 +28,7 @@ a {
 
 .addDetails {
     .details {
-        width: 418px;
+        width: 80%;
     }
     label {
         font-size: 13px;
@@ -46,12 +46,13 @@ a {
 }
 
 .btnAdd {
-    width: 86px;
-    height: 30px;
+    width: 95px;
+    height: 35px;
     float: right;
     font-size: small;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size: 12px;
+    margin-top: 14px;
+    margin-bottom: 14px;
     background-color: #27A844;
     border: 1px solid white;
     border-radius: 4px;
@@ -60,4 +61,8 @@ a {
 .col-5 {
     box-shadow: rgb(0 0 0 / 50%) 0px 5px 15px;
     margin-left: 10px;
+}
+
+.errormsg {
+    font-size: 12px;
 }

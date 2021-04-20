@@ -21,13 +21,13 @@ export class ContactListComponent implements OnInit {
     this.status = datastatus['status'];
     if(this.status){
       this.contactDetails = datastatus['contacts'];
-      let url = this.router.url;
-      if(url=="/home"){
-        this.router.navigate(['/home',this.contactDetails[0].id]);
-      }
-      else{
-        this.router.navigateByUrl(url);
-      }
+      // let url = this.router.url;
+      // if(url=="/home"){
+      //   this.router.navigate(['/home',this.contactDetails[0].id]);
+      // }
+      // else{
+      //   this.router.navigateByUrl(url);
+      // }
     }
   }
 

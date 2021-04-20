@@ -23,8 +23,8 @@ export class ContactAddComponent implements OnInit {
   createForm(){
     this.detailForm = this.formBuild.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      mobile: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10)]],
       landline : [''],
       website : [''],
       address: ['']
@@ -69,13 +69,13 @@ export class ContactAddComponent implements OnInit {
     }else{
       if(this.id!=null){
         let temp = new Contact(this.id,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
-        this.service.updateDate(temp);
+        this.service.update(temp);
         this.router.navigate(['/home',this.id])
       }else{
         this.service.contactId++;
         var newId:string = (this.service.contactId).toString();
         let temp = new Contact(newId,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
-        this.service.pushData(temp);
+        this.service.add(temp);
         this.router.navigate(['/home',newId]);
       }
     }

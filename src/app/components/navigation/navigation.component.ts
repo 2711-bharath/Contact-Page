@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
-import { Contact } from 'src/app/career-module/model/contacts.model';
-import { ContactService } from '../../career-module/service/contact.service';
+import { Contact } from 'src/app/career/model/contacts.model';
+import { ContactService } from '../../career/service/contact.service';
 
 @Component({
   selector: 'app-navigation',

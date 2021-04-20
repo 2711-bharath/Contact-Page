@@ -9,9 +9,9 @@ export class ContactService {
 
   constructor() {
     this.contactDetails = [];
-    this.contactId = 0;
+    this.contactId = 1;
   }
-
+ 
   getContactDetails():object{
     if(this.contactDetails.length==0){
       return {contacts:null,status:false}
@@ -20,17 +20,20 @@ export class ContactService {
     }
   }
 
-  getPersonDetials(id:string):object{
+  getContact(id:string):object{
     if(this.contactDetails.length==0){
       return {contact:null,status:false}
     }else{
-      var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
-      return {contact:this.contactDetails[index],status:true};
+      var contact = this.contactDetails.find(value=>value.id==id);
+      if(contact==undefined){
+        return {contact:null,status:false}
+      }
+      return {contact:contact,status:true};
     }
     
   }
 
-  deletePersonDetails(id:string){
+  deleteContact(id:string):Object{
     var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
     this.contactDetails.splice(index,1);
     if(this.contactDetails.length==0){
@@ -40,14 +43,14 @@ export class ContactService {
     }
   }
 
-  pushData(contact:Contact){
+  add(contact:Contact){
     if(contact==null|| contact==undefined){
       return;
     }
     this.contactDetails.push(contact);
   }
 
-  updateDate(contact:Contact){
+  update(contact:Contact){
     var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(contact.id);
     this.contactDetails[index] = contact;
   }
