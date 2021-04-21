@@ -23,14 +23,14 @@ export class ContactShowComponent implements OnInit {
     this.status = datastatus['status'];
     console.log(this.status)
     if(!this.status){
-      this.router.navigateByUrl('/home')
+      this.router.navigateByUrl('home/contacts')
     }else{
-      this.router.navigate(['/home',this.personDetails.id]);
+      this.router.navigate(['home/contacts',this.personDetails.id]);
     }
   }
 
   edit(){
-    this.router.navigate(['home/edit',this.personDetails.id]);
+    this.router.navigate(['home/contacts/edit',this.personDetails.id]);
   }
 
   addressArray:string[];

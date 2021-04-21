@@ -50,7 +50,7 @@ export class ContactAddComponent implements OnInit {
     if(this.id!=null){
         this.fillForm(this.id)
     }else{
-      this.router.navigateByUrl('/add')
+      this.router.navigateByUrl('/add/contact')
     } 
 
   }
@@ -70,13 +70,13 @@ export class ContactAddComponent implements OnInit {
       if(this.id!=null){
         let temp = new Contact(this.id,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
         this.service.update(temp);
-        this.router.navigate(['/home',this.id])
+        this.router.navigate(['/home/contacts',this.id])
       }else{
         this.service.contactId++;
         var newId:string = (this.service.contactId).toString();
         let temp = new Contact(newId,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
         this.service.add(temp);
-        this.router.navigate(['/home',newId]);
+        this.router.navigate(['/home/contacts',newId]);
       }
     }
   }

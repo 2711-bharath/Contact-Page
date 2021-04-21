@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
-import { Contact } from 'src/app/career/model/contacts.model';
-import { ContactService } from '../../career/service/contact.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,7 +7,7 @@ import { ContactService } from '../../career/service/contact.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private router:Router,private service:ContactService) { }
+  constructor() { }
 
   ngOnInit(): void {
 

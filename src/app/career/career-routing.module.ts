@@ -7,12 +7,12 @@ import {ContactAddComponent} from './components/contact-add/contact-add.componen
 import { CommonModule } from '@angular/common';  
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home',  pathMatch: 'full' },
-  {path: 'home', component: ContactListComponent,
+  { path: '', redirectTo: 'home/contacts',  pathMatch: 'full' },
+  {path: 'home/contacts', component: ContactListComponent,
     children: [{ path: ':id', component: ContactShowComponent }]
   },
-  {path:'add',component:ContactAddComponent},
-  {path:'home/edit/:id',component:ContactAddComponent},
+  {path:'add/contact',component:ContactAddComponent},
+  {path:'home/contacts/edit/:id',component:ContactAddComponent},
 ];
 
 @NgModule({
