@@ -1,34 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../service/contact.service';
 import { Contact } from '../../model/contacts.model';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.scss']
 })
+
 export class ContactListComponent implements OnInit {
 
-
-  constructor(private service:ContactService,private router:Router, private route:ActivatedRoute) { }
+  constructor(private service:ContactService, private router:Router, private route:ActivatedRoute) { }
   
-  contactDetails:Contact[]=[];
-  status:boolean;
+  contactDetails:Contact[];
+  status:boolean = false;
+  loading:boolean = true;
 
   ngOnInit(): void {
-    let datastatus:object = this.service.getContactDetails();
-    this.status = datastatus['status'];
-    if(this.status){
-      this.contactDetails = datastatus['contacts'];
-      // let url = this.router.url;
-      // if(url=="/home"){
-      //   this.router.navigate(['/home',this.contactDetails[0].id]);
+    this.checkStatus()
+    let data = this.service.getContactDetails();
+    data.snapshotChanges().subscribe(obj =>{
+      this.contactDetails = [];
+      obj.forEach(details => {
+        let x = details.payload.toJSON();
+        x['$id'] = details.key;
+        this.contactDetails.push(x as Contact)
+      })
+      // let id = this.route.snapshot.paramMap.get("id");
+      // if(id==null){
+      //   this.router.navigate(['home/contacts',this.contactDetails[0].$id])
       // }
-      // else{
-      //   this.router.navigateByUrl(url);
-      // }
-    }
+    })
   }
 
+  checkStatus(){
+    this.service.getContactDetails().valueChanges().subscribe(data => {
+      this.loading = false;
+      if(data.length == 0){
+        this.status = false;
+      }else{
+        this.status = true;
+      }
+    })
+  }
+
+  
 }

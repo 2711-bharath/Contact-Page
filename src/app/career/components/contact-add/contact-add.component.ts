@@ -19,6 +19,9 @@ export class ContactAddComponent implements OnInit {
   contactDetails:Contact[]=[];
   contactDetailsStatus:Boolean;
   id:string;
+  status:boolean = false;
+  currentPerson:Contact;
+  loading:boolean = true;
 
   createForm(){
     this.detailForm = this.formBuild.group({
@@ -33,32 +36,41 @@ export class ContactAddComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.createForm();
-    let datastatus:object = this.service.getContactDetails()
-
-    this.contactDetailsStatus = datastatus['status']; 
-    if(this.contactDetailsStatus){
-      this.contactDetails = datastatus['contacts'];
-    }
-    this.id = this.route.snapshot.paramMap.get("id");
-    this.router.events.subscribe((val) =>{
-      if(val instanceof NavigationEnd){
-        this.id = this.route.snapshot.paramMap.get("id");
-      }
+    this.checkStatus();
+    let data = this.service.getContactDetails();
+    data.snapshotChanges().subscribe(obj =>{
+      this.contactDetails = [];
+      obj.forEach(details => {
+        let x = details.payload.toJSON();
+        x['$id'] = details.key;
+        this.contactDetails.push(x as Contact);
+      })
     })
-    
+    this.id = this.route.snapshot.paramMap.get("id");
+    this.createForm();
     if(this.id!=null){
         this.fillForm(this.id)
     }else{
       this.router.navigateByUrl('/add/contact')
-    } 
+    }   
 
   }
 
+  checkStatus(){
+    this.service.getContactDetails().valueChanges().subscribe(data => {
+      this.loading = false;
+      if(data.length == 0){
+        this.status = false;
+      }else{
+        this.status = true;
+      }
+    })
+  }
   fillForm(id:string){
-    var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
-    var currentPerson = this.contactDetails[index];
-    this.detailForm.setValue({name:currentPerson.name,email:currentPerson.email,mobile:currentPerson.mobile, landline:currentPerson.landline,website:currentPerson.website,address:currentPerson.address})
+    var data = this.service.getContact(id)
+    data.valueChanges().subscribe(val => {
+      this.detailForm.setValue({name:val?.name,email:val?.email,mobile:val?.mobile, landline:val?.landline,website:val?.website,address:val?.address})
+    })
   }
 
   onSubmit(frm:any){
@@ -68,15 +80,13 @@ export class ContactAddComponent implements OnInit {
       return;
     }else{
       if(this.id!=null){
-        let temp = new Contact(this.id,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
+        let temp = new Contact(frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
         this.service.update(temp);
         this.router.navigate(['/home/contacts',this.id])
       }else{
-        this.service.contactId++;
-        var newId:string = (this.service.contactId).toString();
-        let temp = new Contact(newId,frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
-        this.service.add(temp);
-        this.router.navigate(['/home/contacts',newId]);
+        let temp = new Contact(frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
+        let contactId = this.service.add(temp);
+        this.router.navigate(['/home/contacts',contactId])
       }
     }
   }

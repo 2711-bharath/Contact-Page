@@ -1,66 +1,59 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../model/contacts.model';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ContactService {
-  contactDetails:Contact[];
-  contactId:number;
+  contactDetails: AngularFireList<any>;
+  contactDetail: AngularFireObject<any>;
 
-  constructor() {
-    this.contactDetails = [];
-    this.contactId = 1;
-  }
+  constructor(private db: AngularFireDatabase) {}
  
-  getContactDetails():object{
-    if(this.contactDetails.length==0){
-      return {contacts:null,status:false}
-    }else{
-      return {contacts:this.contactDetails,status:true};
-    }
+  getContactDetails(){
+    this.contactDetails = this.db.list('contact-list');
+    return this.contactDetails;
   }
 
-  getContact(id:string):object{
-    if(this.contactDetails.length==0){
-      return {contact:null,status:false}
-    }else{
-      var contact = this.contactDetails.find(value=>value.id==id);
-      if(contact==undefined){
-        return {contact:null,status:false}
-      }
-      return {contact:contact,status:true};
-    }
-    
+  getContact(id:string){
+    this.contactDetail = this.db.object('contact-list/'+id);
+    return this.contactDetail;
   }
 
-  deleteContact(id:string):Object{
-    var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
-    this.contactDetails.splice(index,1);
-    if(this.contactDetails.length==0){
-      return {contact:null,status:false}
-    }else{
-      return {contact:this.contactDetails[0],status:true}
-    }
+  deleteContact(id:string){
+    this.db.object('contact-list/'+id).remove();
   }
 
   add(contact:Contact){
-    if(contact==null|| contact==undefined){
-      return;
-    }
-    this.contactDetails.push(contact);
+    return this.contactDetails.push({
+      name: contact.name,
+      email: contact.email,
+      mobile: contact.mobile,
+      landline: contact.landline,
+      website: contact.website,
+      address: contact.address
+    }).ref.key;
   }
 
   update(contact:Contact){
-    var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(contact.id);
-    this.contactDetails[index] = contact;
+    this.contactDetail.update({
+      name: contact.name,
+      email: contact.email,
+      mobile: contact.mobile,
+      landline: contact.landline,
+      website: contact.website,
+      address: contact.address
+    })
   }
 
-  checkId(id:string):boolean{
-    var index = this.contactDetails.map((value:Contact) => { return value.id }).indexOf(id);
-    if(index == -1){
-      return false;
-    }else{
-      return true;
-    }
+  getLastContactId(){
+    return this.db.database.ref('contact-list').limitToLast(1).once('value');
+  }
+
+  getFirstContactId(){
+    return this.db.database.ref('contact-list').limitToLast(1).once('value');
   }
 }
+
