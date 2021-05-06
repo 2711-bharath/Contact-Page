@@ -22,6 +22,7 @@ export class ContactAddComponent implements OnInit {
   status:boolean = false;
   currentPerson:Contact;
   loading:boolean = true;
+  loadingForm:boolean = true;
 
   createForm(){
     this.detailForm = this.formBuild.group({
@@ -35,7 +36,6 @@ export class ContactAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.checkStatus();
     let data = this.service.getContactDetails();
     data.snapshotChanges().subscribe(obj =>{
@@ -50,9 +50,10 @@ export class ContactAddComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get("id");
     this.createForm();
     if(this.id!=null){
-        this.fillForm(this.id)
+        this.fillForm(this.id);
     }else{
       this.router.navigateByUrl('/add/contact')
+      this.loadingForm = false;
     }   
 
   }
@@ -73,7 +74,7 @@ export class ContactAddComponent implements OnInit {
     data.subscribe(val => {
       let contact =val.data() as Contact
       console.log(contact)
-      this.loading = false;
+      this.loadingForm = false;
       this.detailForm.setValue({name:contact.name,email:contact.email,mobile:contact.mobile,landline:contact.landline,website:contact.website,address:contact.address})
     })
   }
