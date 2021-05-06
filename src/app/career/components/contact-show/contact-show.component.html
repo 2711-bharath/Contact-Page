@@ -1,4 +1,17 @@
-<div class="row">
+<div *ngIf="loading">
+    <div class="row">
+        <div class="col-md-4 me-5">
+            <div class="item">
+                <ngx-skeleton-loader count="1" [theme]="{ 'border-radius': '0', height: '30px' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="5" [theme]="{ 'border-radius': '0', height: '14px' }"></ngx-skeleton-loader>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <ngx-skeleton-loader count="1"></ngx-skeleton-loader>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!loading">
     <div class="col-md-4 me-5" *ngIf="status">
         <h4>{{personDetails?.name}}</h4>
         <ul class="list-group">

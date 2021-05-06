@@ -18,19 +18,16 @@ export class ContactListComponent implements OnInit {
   loading:boolean = true;
 
   ngOnInit(): void {
-    this.checkStatus()
+    this.checkStatus();
     let data = this.service.getContactDetails();
     data.snapshotChanges().subscribe(obj =>{
-      this.contactDetails = [];
-      obj.forEach(details => {
-        let x = details.payload.toJSON();
-        x['$id'] = details.key;
-        this.contactDetails.push(x as Contact)
+      this.contactDetails = obj.map(e=> {
+        let data = e.payload.doc.data() as Contact; //here solutions
+        return {
+          id : e.payload.doc.id,
+          ...data
+        } as Contact
       })
-      // let id = this.route.snapshot.paramMap.get("id");
-      // if(id==null){
-      //   this.router.navigate(['home/contacts',this.contactDetails[0].$id])
-      // }
     })
   }
 

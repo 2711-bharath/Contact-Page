@@ -17,18 +17,11 @@ export class ContactShowComponent implements OnInit {
   personDetails:Contact;
   status:boolean=false;
   currId:string;
+  loading:boolean = true;
 
   delete(){
     this.service.deleteContact(this.currId);
-    var id;
-    let d = this.service.getLastContactId()
-    let self = this;
-    d.then(function(snapshot) {
-        snapshot.forEach((childSnapshot) => {
-            id =  childSnapshot.key;
-            self.router.navigate(['home/contacts',id])
-        });
-    })
+    this.router.navigate(['home/contacts']);
   }
 
   edit(){
@@ -41,10 +34,10 @@ export class ContactShowComponent implements OnInit {
   contactDetails:Contact[]=[];
 
   ngOnInit(): void {
-
     this.currId = this.route.snapshot.paramMap.get("id");
     this.router.events.subscribe((val) =>{
       if(val instanceof NavigationEnd){
+        this.loading = true
         this.currId = this.route.snapshot.paramMap.get("id");
         this.updateContact(this.currId);
       } 
@@ -59,15 +52,14 @@ export class ContactShowComponent implements OnInit {
   updateContact(id:string){
       this.status = true;
       let data = this.service.getContact(id)
-      data.snapshotChanges().subscribe(val => {
-        if(val==null){
+      data.subscribe((obj)=>{
+        let data = obj.data() as Contact; 
+        if(data==undefined){
           this.status = false;
           return;
-        }  
-        let x = val.payload.toJSON();
-        let temp = []
-        temp.push(x as Contact)
-        this.personDetails = temp[0];  
+        }
+        this.loading = false;
+        this.personDetails = data;   
       })
   }
 }

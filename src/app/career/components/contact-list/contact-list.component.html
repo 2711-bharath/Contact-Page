@@ -6,7 +6,7 @@
     <h6 class="fw-bolder pt-2 pb-1" *ngIf="status">CONTACTS</h6>
     <div class="col-3 me-5 mt-1">
         <div class="list-group rounded-0" *ngFor="let person of contactDetails">
-            <a class="list-group-item list-group-item-action border-1" [routerLink]="['/home/contacts',person?.$id]" routerLinkActive="activePerson text-dark">
+            <a class="list-group-item list-group-item-action border-1" [routerLink]="['/home/contacts',person?.id]" routerLinkActive="activePerson text-dark">
                 <li class="name">{{person?.name}}</li>
                 <li>{{person?.mobile}}</li>
                 <li>{{person?.email}}</li>

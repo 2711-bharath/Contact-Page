@@ -35,15 +35,16 @@ export class ContactAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loading = true;
     this.checkStatus();
     let data = this.service.getContactDetails();
     data.snapshotChanges().subscribe(obj =>{
-      this.contactDetails = [];
-      obj.forEach(details => {
-        let x = details.payload.toJSON();
-        x['$id'] = details.key;
-        this.contactDetails.push(x as Contact);
+      this.contactDetails = obj.map(e=> {
+        let data = e.payload.doc.data() as Contact; 
+        return {
+          id : e.payload.doc.id,
+          ...data
+        } as Contact
       })
     })
     this.id = this.route.snapshot.paramMap.get("id");
@@ -66,27 +67,34 @@ export class ContactAddComponent implements OnInit {
       }
     })
   }
+
   fillForm(id:string){
     var data = this.service.getContact(id)
-    data.valueChanges().subscribe(val => {
-      this.detailForm.setValue({name:val?.name,email:val?.email,mobile:val?.mobile, landline:val?.landline,website:val?.website,address:val?.address})
+    data.subscribe(val => {
+      let contact =val.data() as Contact
+      console.log(contact)
+      this.loading = false;
+      this.detailForm.setValue({name:contact.name,email:contact.email,mobile:contact.mobile,landline:contact.landline,website:contact.website,address:contact.address})
     })
   }
 
-  onSubmit(frm:any){
+  onSubmit(frm:Contact){
 
     if(this.detailForm.invalid){
       this.submitted = true;
       return;
     }else{
       if(this.id!=null){
-        let temp = new Contact(frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
-        this.service.update(temp);
+        let contact: Contact = new Contact(frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
+        console.log(contact)
+        this.service.Update(contact,this.id);
         this.router.navigate(['/home/contacts',this.id])
       }else{
-        let temp = new Contact(frm.name,frm.email,frm.mobile,frm.landline,frm.website,frm.address)
-        let contactId = this.service.add(temp);
-        this.router.navigate(['/home/contacts',contactId])
+        let contactId = this.service.add(frm);
+        let self = this;
+        contactId.then(function(docRef) {
+          self.router.navigate(['/home/contacts',docRef.id])
+      })
       }
     }
   }

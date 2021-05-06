@@ -1,6 +1,6 @@
 export class Contact {
 
-    $id:string;
+    id:string;
     name: string;
     email: string;
     mobile: string;

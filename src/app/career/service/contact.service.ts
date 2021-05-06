@@ -1,59 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../model/contacts.model';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ContactService {
-  contactDetails: AngularFireList<any>;
-  contactDetail: AngularFireObject<any>;
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private firestore: AngularFirestore) {}
  
   getContactDetails(){
-    this.contactDetails = this.db.list('contact-list');
-    return this.contactDetails;
+    return this.firestore.collection('contact-list');
   }
 
   getContact(id:string){
-    this.contactDetail = this.db.object('contact-list/'+id);
-    return this.contactDetail;
+    return this.firestore.doc('contact-list/'+id).get();
   }
 
   deleteContact(id:string){
-    this.db.object('contact-list/'+id).remove();
+    this.firestore.doc('contact-list/'+id).delete();
   }
 
   add(contact:Contact){
-    return this.contactDetails.push({
-      name: contact.name,
-      email: contact.email,
-      mobile: contact.mobile,
-      landline: contact.landline,
-      website: contact.website,
-      address: contact.address
-    }).ref.key;
+    return this.firestore.collection('contact-list').add(contact)
   }
 
-  update(contact:Contact){
-    this.contactDetail.update({
-      name: contact.name,
-      email: contact.email,
-      mobile: contact.mobile,
-      landline: contact.landline,
-      website: contact.website,
-      address: contact.address
+  Update(contact:Contact,id:any){
+    this.firestore.doc('contact-list/'+id).update({
+      name:contact.name,
+      email:contact.email,
+      mobile:contact.mobile,
+      landline:contact.landline,
+      website:contact.website,
+      address:contact.address
     })
   }
 
-  getLastContactId(){
-    return this.db.database.ref('contact-list').limitToLast(1).once('value');
-  }
-
-  getFirstContactId(){
-    return this.db.database.ref('contact-list').limitToLast(1).once('value');
-  }
 }
 
