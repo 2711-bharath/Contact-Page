@@ -21,7 +21,15 @@ export class ContactShowComponent implements OnInit {
 
   delete(){
     this.service.deleteContact(this.currId);
-    this.router.navigate(['home/contacts']);
+    this.service.getDetails().subscribe((data)=>{
+      if(data.length!=0){
+        this.service.activeContactId = data[data.length-1].id;
+        this.router.navigate(['home/contacts/',this.service.activeContactId]);
+      }else{
+        this.service.activeContactId = "";
+        this.router.navigate(['home/contacts/']);
+      }
+    })  
   }
 
   edit(){
@@ -53,13 +61,9 @@ export class ContactShowComponent implements OnInit {
       this.status = true;
       let data = this.service.getContact(id)
       data.subscribe((obj)=>{
-        let data = obj.data() as Contact; 
-        if(data==undefined){
-          this.status = false;
-          return;
-        }
         this.loading = false;
-        this.personDetails = data;   
+        this.personDetails = obj['contact'];
+        this.status = obj['status'];
       })
   }
 }

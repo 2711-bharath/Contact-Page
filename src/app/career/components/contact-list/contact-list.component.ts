@@ -18,29 +18,25 @@ export class ContactListComponent implements OnInit {
   loading:boolean = true;
 
   ngOnInit(): void {
-    this.checkStatus();
-    let data = this.service.getContactDetails();
-    data.snapshotChanges().subscribe(obj =>{
-      this.contactDetails = obj.map(e=> {
-        let data = e.payload.doc.data() as Contact; //here solutions
-        return {
-          id : e.payload.doc.id,
-          ...data
-        } as Contact
-      })
-    })
-  }
 
-  checkStatus(){
-    this.service.getContactDetails().valueChanges().subscribe(data => {
-      this.loading = false;
-      if(data.length == 0){
-        this.status = false;
+    this.service.getContactDetails().subscribe(dataStatus =>{
+      this.contactDetails = dataStatus['contacts'];
+      this.status = dataStatus['status'];
+      this.loading = false;    
+
+      var urlVal:string = this.router.url;
+      console.log(urlVal)
+      if(urlVal != '/home/contacts'){
+        this.router.navigateByUrl(urlVal)
       }else{
-        this.status = true;
+        this.service.activeContactId = this.contactDetails[0].id;
+        this.router.navigate(['home/contacts',this.service.activeContactId])
       }
     })
+    
   }
+
+  
 
   
 }

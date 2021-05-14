@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Contact } from '../model/contacts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,26 +10,88 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 export class ContactService {
 
-  constructor(private firestore: AngularFirestore) {}
+  contactDetails:Contact[];
+  contactDoc:Contact;
+  activeContactId:string;
+
+  constructor(private firestore: AngularFirestore, private router:Router) {
+    this.contactDetails = []
+    this.activeContactId = ""
+
+  }
  
-  getContactDetails(){
-    return this.firestore.collection('contact-list');
+  getContactDetails():Observable<{contacts: Array<Contact> , status: boolean }>{
+    var contactDetails = new Array<Contact>();
+    return new Observable<any>((sub)=> {
+      this.firestore.collection('contact-list').snapshotChanges().subscribe((data)=>{
+        contactDetails = []
+        data.map(e=> {
+          let data = e.payload.doc.data() as Contact; 
+          let contact:Contact = {
+            id : e.payload.doc.id,
+            ...data
+          } as Contact
+          contactDetails.push(contact);
+        })
+        if(contactDetails.length != 0){
+          sub.next({contacts:contactDetails,status:true});
+        }else{
+          sub.next({contacts:null,status:false});
+        }
+      })
+
+    })
   }
 
-  getContact(id:string){
-    return this.firestore.doc('contact-list/'+id).get();
+
+
+  getDetails() {
+    const contactDetails = new Array<Contact>();
+    return new Observable<any>((sub)=> {
+      const contactDetailsRef = this.firestore.collection("contact-list").get()
+       .subscribe((contacts)=>{
+         if(contacts) {
+           contacts.forEach((contact)=> {
+             const currContact = contact.data() as Contact;
+             currContact['id'] = contact.id;
+             contactDetails.push(currContact);
+           });
+           sub.next(contactDetails);
+         }
+         if(contactDetailsRef) {
+           contactDetailsRef.unsubscribe();
+         }
+       })
+    })
   }
+
+  getContact(id:string): Observable<{contact: Contact, status: boolean }>{
+    this.activeContactId = id;
+    return new Observable<any>((obj) => {
+      this.contactDetails = []
+      this.firestore.doc('contact-list/'+id).get().subscribe((contact)=>{
+        if(contact && contact.exists){
+          const currContact = contact.data() as Contact;
+          obj.next({contact:currContact, status: true});
+        } else {
+          obj.next({contact:null, status: false});
+        }
+      })
+    })
+  }
+
 
   deleteContact(id:string){
+    this.activeContactId = "";
     this.firestore.doc('contact-list/'+id).delete();
   }
 
-  add(contact:Contact){
-    return this.firestore.collection('contact-list').add(contact)
+  addContact(contact:Contact){
+    return this.firestore.collection('contact-list').add(contact);
   }
 
-  Update(contact:Contact,id:any){
-    this.firestore.doc('contact-list/'+id).update({
+  UpdateContact(contact:Contact){
+    this.firestore.doc('contact-list/'+contact.id).set({
       name:contact.name,
       email:contact.email,
       mobile:contact.mobile,
@@ -36,7 +100,5 @@ export class ContactService {
       address:contact.address
     })
   }
-
-
 }
 
