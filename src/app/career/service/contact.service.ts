@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Contact } from '../model/contacts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class ContactService {
   contactDoc:Contact;
   activeContactId:string;
 
-  constructor(private firestore: AngularFirestore, private router:Router) {
+  constructor(private firestore: AngularFirestore) {
     this.contactDetails = []
     this.activeContactId = ""
 
@@ -39,7 +38,6 @@ export class ContactService {
           sub.next({contacts:null,status:false});
         }
       })
-
     })
   }
 

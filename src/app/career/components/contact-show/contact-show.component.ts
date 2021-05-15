@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { Contact } from '../../model/contacts.model';  
 import { ContactService } from '../../service/contact.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact-show',
@@ -11,7 +12,7 @@ import { ContactService } from '../../service/contact.service';
 
 export class ContactShowComponent implements OnInit {
 
-  constructor(private service:ContactService, private route:ActivatedRoute, private router:Router) {}
+  constructor(private service:ContactService, private route:ActivatedRoute, private router:Router, private toastr: ToastrService) {}
 
   displayForm:boolean=false;
   personDetails:Contact;
@@ -30,6 +31,7 @@ export class ContactShowComponent implements OnInit {
         this.router.navigate(['home/contacts/']);
       }
     })  
+    this.toastr.success(this.personDetails.name+' delete successfully', 'Message')
   }
 
   edit(){

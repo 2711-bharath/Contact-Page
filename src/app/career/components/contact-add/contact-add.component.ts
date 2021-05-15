@@ -3,6 +3,7 @@ import { ContactService } from '../../service/contact.service';
 import { Contact } from '../../model/contacts.model';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact-add',
@@ -13,7 +14,7 @@ export class ContactAddComponent implements OnInit {
 
   detailForm = new FormGroup({})
 
-  constructor(private service:ContactService,private formBuild:FormBuilder, private route:ActivatedRoute, private router:Router) { }
+  constructor(private service:ContactService,private formBuild:FormBuilder, private route:ActivatedRoute, private router:Router, private toastr: ToastrService) { }
 
   submitted:boolean = false
   contactDetails:Contact[]=[];
@@ -71,10 +72,12 @@ export class ContactAddComponent implements OnInit {
       if(this.id!=null){
         let contact: Contact = new Contact({id:this.id, name:frm.name,email:frm.email,mobile:frm.mobile,landline:frm.landline,website:frm.website,address:frm.address})
         this.service.UpdateContact(contact);
-        this.router.navigate(['/home/contacts',this.id])
+        this.router.navigate(['/home/contacts',this.id]);
+        this.toastr.success(frm.name+' updated successfully','Message')
       }else{
         let contactId = this.service.addContact(frm);
         let self = this;
+        this.toastr.success(frm.name+' added successfully','Message')
         contactId.then(function(docRef) {
           self.service.activeContactId = docRef.id
           self.router.navigate(['/home/contacts',docRef.id])
