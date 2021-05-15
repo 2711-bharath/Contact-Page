@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../service/contact.service';
 import { Contact } from '../../model/contacts.model';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms'
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router'
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-contact-add',
