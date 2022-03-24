@@ -5,13 +5,13 @@
 export const environment = {
   production : false,
   firebaseConfig : {
-    apiKey: "AIzaSyDxc_O-WGL5DGmDfpJlzbPytGWt3GrOjkE",
-    authDomain: "fosterate-8d182.firebaseapp.com",
-    projectId: "fosterate-8d182",
-    storageBucket: "fosterate-8d182.appspot.com",
-    messagingSenderId: "611369411265",
-    appId: "1:611369411265:web:f402ce7ac28e173a3f2a40",
-    measurementId: "G-WW6X6THTQE"
+    apiKey: "AIzaSyBa4Ty5VjgZ9XT7nEZzO7Ks8xNiXVAsXN4",
+    authDomain: "fosterate-intern-project.firebaseapp.com",
+    projectId: "fosterate-intern-project",
+    storageBucket: "fosterate-intern-project.appspot.com",
+    messagingSenderId: "384676513715",
+    appId: "1:384676513715:web:01d94de0519e378a6d2dc6",
+    measurementId: "G-WW8J4SVBE9"
   },
 };
 
