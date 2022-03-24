@@ -1,0 +1,39 @@
+<div *ngIf="loading && status">
+    <div class="row">
+        <div class="col-md-4 me-5">
+            <div class="item">
+                <ngx-skeleton-loader count="1" [theme]="{ 'border-radius': '0', height: '32px' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader count="5" [theme]="{ 'border-radius': '0', height: '15px' }"></ngx-skeleton-loader>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!loading">
+    <div class="col-md-4 me-5" *ngIf="status">
+        <h4>{{personDetails?.name}}</h4>
+        <ul class="list-group">
+            <li>Email: {{personDetails?.email}}</li>
+            <li>Mobile: {{personDetails?.mobile}}</li>
+            <li>Landline: {{personDetails?.landline}}</li>
+            <li>Website: {{personDetails?.website}}</li>
+            <li>
+                <div class="row">
+                    <div class="col-sm-2">
+                        Address:
+                    </div>
+                    <div class="col-sm-10">
+                        <pre>{{personDetails?.address}}</pre>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6" *ngIf="status">
+        <img src="../../../../assets/images/Edit-icon.png " alt="edit icon " width="14px " height="14px " (click)="edit() "><span class="options " (click)="edit() ">EDIT</span>
+        <img src="../../../../assets/images/delete2.png " alt="delete icon " width="15px " height="23px " (click)="delete() "><span class="options " (click)="delete() ">DELETE</span>
+    </div>
+</div>
+<div *ngIf="!status" class="col-md-5 ms-3">
+    <span class="display-6 text-danger "><i class="fas fa-info-circle me-3 "></i>Wrong User Id</span>
+</div>

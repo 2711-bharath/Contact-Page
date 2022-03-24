@@ -1,0 +1,68 @@
+@mixin bgactivate {
+    background-color: #CFE7F3;
+    cursor: pointer;
+}
+
+.col-3 {
+    width: 260px;
+}
+
+li {
+    font-size: 14px;
+    list-style-type: none;
+}
+
+.name {
+    font-size: 16px;
+}
+
+a {
+    &:hover {
+        @include bgactivate;
+    }
+}
+
+.activePerson {
+    @include bgactivate;
+}
+
+.addDetails {
+    .details {
+        width: 80%;
+    }
+    label {
+        font-size: 13px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .required {
+        font-size: 15px;
+        color: #E42E45;
+        font-weight: 400;
+    }
+    .flex-container {
+        display: flex;
+    }
+}
+
+.btnAdd {
+    width: 95px;
+    height: 35px;
+    float: right;
+    font-size: small;
+    font-size: 12px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    background-color: #27A844;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.col-5 {
+    box-shadow: rgb(0 0 0 / 50%) 0px 5px 15px;
+    margin-left: 10px;
+}
+
+.errormsg {
+    font-size: 12px;
+}

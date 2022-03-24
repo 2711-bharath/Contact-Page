@@ -1,0 +1,28 @@
+<!-- <div class="m-0 p-0">
+    <ngx-skeleton-loader *ngIf="loading" [theme]="{width: '100%',height: '10px','background-color': '#00BFFF'}"></ngx-skeleton-loader>
+</div> -->
+
+<div class="row ms-2 mt-1" *ngIf="status">
+    <h6 class="fw-bolder pt-2 pb-1" *ngIf="status">CONTACTS</h6>
+    <div class="col-3 me-5 mt-1">
+        <div class="list-group rounded-0" *ngFor="let person of contactDetails">
+            <a class="list-group-item list-group-item-action border-1" [routerLink]="['/home/contacts',person?.id]" routerLinkActive="activePerson text-dark">
+                <li class="name">{{person?.name}}</li>
+                <li>{{person?.mobile}}</li>
+                <li>{{person?.email}}</li>
+            </a>
+        </div>
+    </div>
+    <div class="col-9 mt-1">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+<div class="text-center mt-5 " *ngIf="!status && !loading">
+    <span class="display-6 text-danger "><i class="fas fa-info-circle me-3 "></i>No Contacts To Display</span>
+</div>
+
+<div *ngIf="loading">
+    <img class="rounded mx-auto d-block" src="../../../../assets/images/loader.gif" alt="loader" height="300px">
+</div>

@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { NavigationComponent } from './app-module/component/navigation/navigation.component'
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
+import { AppComponent, NavigationComponent } from './components';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -18,8 +23,18 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 2000,
+        positionClass: 'toast-top-right'
+      }
+    ),
     CommonModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
